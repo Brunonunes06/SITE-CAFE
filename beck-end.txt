@@ -1,0 +1,788 @@
+// Dados simulados do "banco de dados"
+const produtosData = [
+    {
+        id: 1,
+        nome: "Café Especial Bourbon",
+        categoria: "especiais",
+        preco: 45.90,
+        descricao: "Café especial com notas de chocolate e caramelo, cultivado nas montanhas de Minas Gerais.",
+        imagem: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        rating: 4.8,
+        reviews: 124
+    },
+    {
+        id: 2,
+        nome: "Café Gourmet Arábica",
+        categoria: "gourmet",
+        preco: 38.50,
+        descricao: "Blend premium de grãos arábica com sabor suave e aroma intenso.",
+        imagem: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        rating: 4.6,
+        reviews: 89
+    },
+    {
+        id: 3,
+        nome: "Café Orgânico Sustentável",
+        categoria: "organicos",
+        preco: 52.00,
+        descricao: "Café 100% orgânico, cultivado sem agrotóxicos com práticas sustentáveis.",
+        imagem: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        rating: 4.9,
+        reviews: 156
+    },
+    {
+        id: 4,
+        nome: "Café Especial Catuaí",
+        categoria: "especiais",
+        preco: 41.90,
+        descricao: "Variedade Catuaí com processo de fermentação controlada, sabor frutado único.",
+        imagem: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        rating: 4.7,
+        reviews: 98
+    },
+    {
+        id: 5,
+        nome: "Café Gourmet Blend Premium",
+        categoria: "gourmet",
+        preco: 43.75,
+        descricao: "Blend exclusivo de diferentes regiões, equilibrio perfeito entre acidez e doçura.",
+        imagem: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        rating: 4.5,
+        reviews: 67
+    },
+    {
+        id: 6,
+        nome: "Café Orgânico Cerrado",
+        categoria: "organicos",
+        preco: 48.90,
+        descricao: "Do Cerrado Mineiro, certificado orgânico com notas de frutas vermelhas.",
+        imagem: "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        rating: 4.8,
+        reviews: 143
+    }
+];
+
+const avaliacoesData = [
+    {
+        id: 1,
+        nome: "Maria Silva",
+        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+        cargo: "Empresária",
+        rating: 5,
+        texto: "O melhor café que já experimentei! O sabor é incrível e a qualidade é excepcional. Recomendo para todos os amantes de café."
+    },
+    {
+        id: 2,
+        nome: "João Santos",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+        cargo: "Chef de Cozinha",
+        texto: "Como chef, sou muito exigente com a qualidade dos ingredientes. O Café Aroma superou todas as minhas expectativas!",
+        rating: 5
+    },
+    {
+        id: 3,
+        nome: "Ana Costa",
+        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+        cargo: "Barista Profissional",
+        texto: "Trabalho com café há 10 anos e posso afirmar que os grãos do Café Aroma são de qualidade superior. Sabor único!",
+        rating: 5
+    }
+];
+
+// Variáveis globais
+let currentSlide = 0;
+let isLoading = false;
+
+// Inicialização quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    // Simular carregamento
+    setTimeout(() => {
+        document.getElementById('loading-screen').classList.add('hidden');
+        initializeApp();
+    }, 2000);
+});
+
+function initializeApp() {
+    // Inicializar componentes
+    initNavigation();
+    initScrollEffects();
+    initProdutos();
+    initAvaliacoes();
+    initForms();
+    initAnimations();
+    initBackToTop();
+    
+    // Carregar produtos inicialmente
+    loadProdutos('todos');
+}
+
+// Navegação
+function initNavigation() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+}// Toggle menu mobile
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    // Fechar menu ao clicar em link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            
+            // Atualizar link ativo
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+        });
+    });
+    
+    // Scroll spy para navegação
+    window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollPos = window.scrollY + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+}
+
+// Efeitos de scroll
+function initScrollEffects() {
+    const header = document.getElementById('header');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Intersection Observer para animações
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                
+                // Animar contadores
+                if (entry.target.classList.contains('stat-number')) {
+                    animateCounter(entry.target);
+                }
+            }
+        });
+    }, observerOptions);
+    
+    // Observar elementos para animação
+    document.querySelectorAll('.scroll-animate, .stat-number').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Produtos
+function initProdutos() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Atualizar botão ativo
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Filtrar produtos
+            const filter = btn.getAttribute('data-filter');
+            loadProdutos(filter);
+        });
+    });
+}
+
+function loadProdutos(categoria) {
+    const grid = document.getElementById('produtos-grid');
+    const loading = document.getElementById('loading-produtos');
+    
+    // Mostrar loading
+    loading.classList.add('show');
+    grid.innerHTML = '';
+    
+    // Simular delay de carregamento
+    setTimeout(() => {
+        const produtosFiltrados = categoria === 'todos' 
+            ? produtosData 
+            : produtosData.filter(produto => produto.categoria === categoria);
+        
+        produtosFiltrados.forEach((produto, index) => {
+            const produtoCard = createProdutoCard(produto);
+            grid.appendChild(produtoCard);
+            
+            // Animar entrada dos cards
+            setTimeout(() => {
+                produtoCard.classList.add('show');
+            }, index * 100);
+        });
+        
+        loading.classList.remove('show');
+    }, 800);
+}
+
+function createProdutoCard(produto) {
+    const card = document.createElement('div');
+    card.className = 'produto-card';
+    card.setAttribute('data-categoria', produto.categoria);
+    
+    const stars = '★'.repeat(Math.floor(produto.rating)) + 
+                 (produto.rating % 1 ? '☆' : '') + 
+                 '☆'.repeat(5 - Math.ceil(produto.rating));
+    
+    card.innerHTML = `
+        <img src="${produto.imagem}" alt="${produto.nome}" class="produto-image" loading="lazy">
+        <div class="produto-info">
+            <span class="produto-categoria">${getCategoriaName(produto.categoria)}</span>
+            <h3 class="produto-nome">${produto.nome}</h3>
+            <p class="produto-descricao">${produto.descricao}</p>
+            <div class="produto-rating">
+                <div class="stars">
+                    ${Array.from({length: 5}, (_, i) => 
+                        `<span class="star ${i < Math.floor(produto.rating) ? 'filled' : ''}">${i < Math.floor(produto.rating) ? '★' : '☆'}</span>`
+                    ).join('')}
+                </div>
+                <span class="rating-text">${produto.rating} (${produto.reviews} avaliações)</span>
+            </div>
+            <div class="produto-preco">R$ ${produto.preco.toFixed(2).replace('.', ',')}</div>
+            <button class="produto-btn" onclick="adicionarAoCarrinho(${produto.id})">
+                <i class="fas fa-shopping-cart"></i>
+                Adicionar ao Carrinho
+            </button>
+        </div>
+    `;
+    
+    return card;
+}
+
+function getCategoriaName(categoria) {
+    const nomes = {
+        'especiais': 'Especial',
+        'gourmet': 'Gourmet',
+        'organicos': 'Orgânico'
+    };
+    return nomes[categoria] || categoria;
+}
+
+function adicionarAoCarrinho(produtoId) {
+    const produto = produtosData.find(p => p.id === produtoId);
+    if (produto) {
+        showToast(`${produto.nome} adicionado ao carrinho!`, 'success');
+        
+        // Aqui você implementaria a lógica real do carrinho
+        console.log('Produto adicionado ao carrinho:', produto);
+    }
+}
+
+// Avaliações Carousel
+function initAvaliacoes() {
+    const carousel = document.getElementById('avaliacoes-carousel');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    // Criar container das avaliações
+    const container = document.createElement('div');
+    container.className = 'avaliacoes-container';
+    
+    avaliacoesData.forEach(avaliacao => {
+        const card = createAvaliacaoCard(avaliacao);
+        container.appendChild(card);
+    });<Thinking>
+The user wants me to continue the JavaScript code exactly where it left off. I can see the code was cut off in the middle of the `initAvaliacoes()` function, specifically after creating the avaliacao cards. I need to continue from there without any explanation or meta-commentary, just continuing the code naturally.
+
+Looking at the structure, I need to:
+1. Complete the initAvaliacoes function
+2. Add the createAvaliacaoCard function
+3. Add carousel navigation functions
+4. Complete other initialization functions like initForms, initAnimations, initBackToTop
+5. Add utility functions like showToast, animateCounter
+6. Add any remaining helper functions
+
+I should continue with the same coding style and patterns established in the existing code.
+</Thinking>
+
+carousel.appendChild(container);
+    
+    // Event listeners para navegação
+    prevBtn.addEventListener('click', () => {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateCarousel();
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (currentSlide < avaliacoesData.length - 1) {
+            currentSlide++;
+            updateCarousel();
+        }
+    });
+    
+    // Auto-play do carousel
+    setInterval(() => {
+        if (currentSlide < avaliacoesData.length - 1) {
+            currentSlide++;
+        } else {
+            currentSlide = 0;
+        }
+        updateCarousel();
+    }, 5000);
+    
+    updateCarousel();
+}
+
+function createAvaliacaoCard(avaliacao) {
+    const card = document.createElement('div');
+    card.className = 'avaliacao-card';
+    
+    const stars = Array.from({length: 5}, (_, i) => 
+        `<span class="star ${i < avaliacao.rating ? 'filled' : ''}">${i < avaliacao.rating ? '★' : '☆'}</span>`
+    ).join('');
+    
+    card.innerHTML = `
+        <div class="avaliacao-rating">
+            ${stars}
+        </div>
+        <p class="avaliacao-texto">"${avaliacao.texto}"</p>
+        <div class="avaliacao-autor">
+            <img src="${avaliacao.avatar}" alt="${avaliacao.nome}" class="autor-avatar">
+            <div class="autor-info">
+                <h4>${avaliacao.nome}</h4>
+                <p>${avaliacao.cargo}</p>
+            </div>
+        </div>
+    `;
+    
+    return card;
+}
+
+function updateCarousel() {
+    const container = document.querySelector('.avaliacoes-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    if (container) {
+        container.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+    
+    // Atualizar estado dos botões
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === avaliacoesData.length - 1;
+}
+
+// Formulários
+function initForms() {
+    const contatoForm = document.getElementById('contato-form');
+    const newsletterForm = document.getElementById('newsletter-form');
+    
+    // Formulário de contato
+    if (contatoForm) {
+        contatoForm.addEventListener('submit', handleContatoSubmit);
+    }
+    
+    // Formulário de newsletter
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+    }
+    
+    // Validação em tempo real
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        input.addEventListener('blur', validateField);
+        input.addEventListener('input', clearFieldError);
+    });
+}
+
+function handleContatoSubmit(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    
+    // Validar formulário
+    if (!validateContatoForm(data)) {
+        return;
+    }
+    
+    // Simular envio
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    
+    setTimeout(() => {
+        showToast('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+        e.target.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    }, 2000);
+}
+
+function handleNewsletterSubmit(e) {
+    e.preventDefault();
+    
+    const email = e.target.querySelector('input[type="email"]').value;
+    
+    if (!validateEmail(email)) {
+        showToast('Por favor, insira um email válido.', 'error');
+        return;
+    }
+    
+    const submitBtn = e.target.querySelector('button');
+    const originalText = submitBtn.textContent;
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    
+    setTimeout(() => {
+        showToast('Inscrição realizada com sucesso!', 'success');
+        e.target.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    }, 1500);
+}
+
+function validateContatoForm(data) {
+    let isValid = true;
+    
+    // Validar campos obrigatórios
+    const requiredFields = ['nome', 'email', 'assunto', 'mensagem'];
+    
+    requiredFields.forEach(field => {
+        if (!data[field] || data[field].trim() === '') {
+            showFieldError(field, 'Este campo é obrigatório.');
+            isValid = false;
+        }
+    });
+    
+    // Validar email
+    if (data.email && !validateEmail(data.email)) {
+        showFieldError('email', 'Por favor, insira um email válido.');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function validateField(e) {
+    const field = e.target;
+    const value = field.value.trim();
+    
+    // Limpar erro anterior
+    clearFieldError(e);
+    
+    // Validar campo específico
+    if (field.hasAttribute('required') && !value) {
+        showFieldError(field.name, 'Este campo é obrigatório.');
+        return false;
+    }
+    
+    if (field.type === 'email' && value && !validateEmail(value)) {
+        showFieldError(field.name, 'Por favor, insira um email válido.');
+        return false;
+    }
+    
+    return true;
+}
+
+function showFieldError(fieldName, message) {
+    const field = document.querySelector(`[name="${fieldName}"]`);
+    if (!field) return;
+    
+    field.classList.add('error');
+    
+    // Remover mensagem de erro anterior
+    const existingError = field.parentNode.querySelector('.field-error');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Adicionar nova mensagem de erro
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'field-error';
+    errorDiv.textContent = message;
+    errorDiv.style.color = '#F44336';
+    errorDiv.style.fontSize = '0.875rem';
+    errorDiv.style.marginTop = '0.25rem';
+    
+    field.parentNode.appendChild(errorDiv);
+}
+
+function clearFieldError(e) {
+    const field = e.target;
+    field.classList.remove('error');
+    
+    const errorDiv = field.parentNode.querySelector('.field-error');
+    if (errorDiv) {
+        errorDiv.remove();
+    }
+}
+
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Animações
+function initAnimations() {
+    // Animação de digitação para o hero
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+        
+        setTimeout(typeWriter, 1000);
+    }
+    
+    // Animação de flutuação para elementos
+    const floatingElements = document.querySelectorAll('.floating');
+    floatingElements.forEach((element, index) => {
+        element.style.animationDelay = `${index * 0.5}s`;
+    });
+}
+
+function animateCounter(element) {
+    const target = parseInt(element.getAttribute('data-target') || element.textContent);
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    
+    const counter = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            element.textContent = target;
+            clearInterval(counter);
+        } else {
+            element.textContent = Math.floor(current);
+        }
+    }, 16);
+}
+
+// Back to Top
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Toast Notifications
+function showToast(message, type = 'success') {
+    // Remover toast existente
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    // Criar novo toast
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+    
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="${icon} toast-icon"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Mostrar toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    // Remover toast após 4 segundos
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 300);
+    }, 4000);
+}
+
+// Smooth Scroll para links internos
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const headerHeight = document.getElementById('header').offsetHeight;
+            const targetPosition = target.offsetTop - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Lazy Loading para imagens
+function initLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                observer.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Utilitários
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// Performance Monitoring
+function initPerformanceMonitoring() {
+    // Monitorar tempo de carregamento
+    window.addEventListener('load', () => {
+        const loadTime = performance.now();
+        console.log(`Página carregada em ${loadTime.toFixed(2)}ms`);
+        
+        // Enviar métricas (em produção, enviar para analytics)
+        if (loadTime > 3000) {
+            console.warn('Página demorou mais que 3 segundos para carregar');
+        }
+    });
+    
+    // Monitorar erros JavaScript
+    window.addEventListener('error', (e) => {
+        console.error('Erro JavaScript:', e.error);
+        // Em produção, enviar erro para serviço de monitoramento
+    });
+}
+
+// Acessibilidade
+function initAccessibility() {
+    // Navegação por teclado
+    document.addEventListener('keydown', (e) => {
+        // ESC para fechar modais/menus
+        if (e.key === 'Escape') {
+            const activeMenu = document.querySelector('.nav-menu.active');
+            if (activeMenu) {
+                document.getElementById('hamburger').classList.remove('active');
+                activeMenu.classList.remove('active');
+            }
+        }
+    });
+    
+    // Indicador de foco visível
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            document.body.classList.add('keyboard-navigation');
+        }
+    });
+    
+    document.addEventListener('mousedown', () => {
+        document.body.classList.remove('keyboard-navigation');
+    });
+}
+
+// Inicializar funcionalidades adicionais
+document.addEventListener('DOMContentLoaded', () => {
+    initLazyLoading();
+    initPerformanceMonitoring();
+    initAccessibility();
+});
+
+// Service Worker para PWA (opcional)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registrado com sucesso:', registration);
+            })
+            .catch(registrationError => {
+                console.log('Falha no registro do SW:', registrationError);
+            });
+    });
+}
+
+// Exportar funções para uso global (se necessário)
+window.CafeAroma = {
+    showToast,
+    adicionarAoCarrinho,
+    loadProdutos,
+    validateEmail
+};
+

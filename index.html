@@ -1,0 +1,604 @@
+<html lang="pt-BR">
+<script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js"
+    id="eppiocemhmnlbhjplcgkofciiegomcon"></script>
+<script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script>
+<script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script>
+
+<head>
+    <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js"
+        id="eppiocemhmnlbhjplcgkofciiegomcon"></script>
+    <style type="text/css" id="operaUserStyle"></style>
+    <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script>
+    <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script>
+
+    <link rel="icon" href="logo.jpg" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Descubra os melhores cafés especiais do Brasil no Café Aroma. Grãos selecionados, torrefação artesanal e sabores únicos.">
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Café Aroma - Os melhores cafés especiais do Brasil">
+    <meta property="og:description" content="Grãos selecionados, torrefação artesanal e sabores únicos.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80">
+    <meta property="og:url" content="http://localhost:8000">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#8B4513">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles.css">
+
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+        rel="stylesheet">
+
+    <title>Café Aroma - Os Melhores Cafés Especiais do Brasil</title>
+    <style type="text/css" id="operaUserStyle"></style>
+    <script bis_use="true" type="text/javascript" charset="utf-8"
+        data-bis-config="[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;]"
+        src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/traffic.js"></script>
+    <script bis_use="true" type="text/javascript" charset="utf-8"
+        data-bis-config="[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;]"
+        src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/traffic.js"></script>
+</head>
+
+<body __processed_5775f67e-3245-4c36-8cd9-f193bcfcd3f6__="true"
+    bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQiLCJSRURESVQiOiJkaXNhYmxlZCIsIlBJTlRFUkVTVCI6ImRpc2FibGVkIiwiSU5TVEFHUkFNIjoiZGlzYWJsZWQiLCJUSUtUT0siOiJkaXNhYmxlZCIsIkxJTktFRElOIjoiZGlzYWJsZWQiLCJDT05GSUciOiJkaXNhYmxlZCJ9LCJ2ZXJzaW9uIjoiMi4wLjM1Iiwic2NvcmUiOjIwMDM1fV0="
+    __processed_52b5cabd-faab-4b8a-92ef-9d048d61dc5a__="true">
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar" role="navigation" aria-label="Menu principal">
+            <div class="nav-container" bis_skin_checked="1">
+                <a href="#" class="logo">
+                    <i class="fas fa-coffee"></i>
+                    Café Aroma
+                </a>
+
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home" class="nav-link" bis_skin_checked="1">Início</a></li>
+                    <li><a href="#produtos" class="nav-link active" bis_skin_checked="1"
+                            aria-current="page">Produtos</a></li>
+                    <li><a href="#sobre" class="nav-link" bis_skin_checked="1">Sobre</a></li>
+                    <li><a href="#contato" class="nav-link" bis_skin_checked="1">Contato</a></li>
+                </ul>
+                <div class="nav-actions" bis_skin_checked="1">
+                    <div class="nav-search" bis_skin_checked="1">
+                        <input type="search" id="search-products" placeholder="Buscar produtos..."
+                            aria-label="Buscar produtos">
+                    </div>
+                    <button id="cart-btn" class="cart-btn" aria-label="Abrir carrinho">
+                        <i class="fas fa-shopping-cart"></i> <span id="cart-count" class="cart-count">19</span>
+                    </button>
+                </div>
+
+                <div class="hamburger" id="hamburger" role="button" aria-label="Abrir menu" tabindex="0"
+                    aria-controls="nav-menu" aria-expanded="false" bis_skin_checked="1">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background" bis_skin_checked="1"></div>
+        <div class="hero-overlay" bis_skin_checked="1"></div>
+        <div class="hero-content" bis_skin_checked="1">
+            <h1 class="hero-title">
+                <span class="title-line">O Melhor</span>
+                <span class="title-line"><span class="highlight">Café</span> do Brasil</span>
+            </h1>
+            <p class="hero-subtitle">
+                Descubra sabores únicos com nossos cafés especiais,
+                cultivados com carinho e torrados artesanalmente para você.
+            </p>
+            <div class="hero-buttons" bis_skin_checked="1">
+                <a href="#produtos" class="btn btn-primary" bis_skin_checked="1">
+                    <i class="fas fa-coffee"></i>
+                    Ver Produtos
+                </a>
+                <a href="#sobre" class="btn btn-secondary" bis_skin_checked="1">
+                    <i class="fas fa-play"></i>
+                    Nossa História
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Produtos Section -->
+    <section id="produtos" class="produtos">
+        <div class="container" bis_skin_checked="1">
+            <div class="section-header" bis_skin_checked="1">
+                <h2 class="section-title">Nossos Produtos</h2>
+                <p class="section-subtitle">Cafés especiais selecionados com carrinho</p>
+            </div>
+
+            <div class="produtos-filter" bis_skin_checked="1">
+                <button class="filter-btn active" data-filter="todos" role="tab" aria-pressed="false">Todos</button>
+                <button class="filter-btn" data-filter="especiais" role="tab" aria-pressed="false">Especiais</button>
+                <button class="filter-btn" data-filter="gourmet" role="tab" aria-pressed="false">Gourmet</button>
+                <button class="filter-btn" data-filter="organicos" role="tab" aria-pressed="false">Orgânicos</button>
+            </div>
+
+            <!-- <div class="loading-produtos" id="loading-produtos" bis_skin_checked="1">
+                <div class="spinner" bis_skin_checked="1"></div>
+                <p>Carregando produtos...</p>
+            </div> -->
+
+            <div class="produtos-grid" id="produtos-grid" bis_skin_checked="1">
+                <div class="produto-card show" bis_skin_checked="1">
+                    <div class="produto-image-wrap" bis_skin_checked="1"><span class="badge badge-top">Mais
+                            votado</span><img
+                            src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&amp;fit=crop&amp;w=500&amp;q=80"
+                            alt="Café Especial Bourbon" class="produto-image" loading="lazy"></div>
+                    <div class="produto-info" bis_skin_checked="1">
+                        <span class="produto-categoria">especiais</span>
+                        <h3 class="produto-nome">Café Especial Bourbon</h3>
+                        <p class="produto-descricao">Notas de chocolate e caramelo.</p>
+                        <div class="produto-rating" bis_skin_checked="1"><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span> <span
+                                class="rating-text">4.8 (124)</span></div>
+                        <div class="produto-preco" bis_skin_checked="1">R$ 45,90</div>
+                        <div class="produto-actions" bis_skin_checked="1">
+                            <button class="produto-btn" data-add="1"
+                                aria-label="Adicionar Café Especial Bourbon ao carrinho">Adicionar ao Carrinho</button>
+                            <button class="produto-btn btn-outline" data-review="1"
+                                aria-label="Ver avaliações de Café Especial Bourbon">Ver Avaliações</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="produto-card show" bis_skin_checked="1">
+                    <div class="produto-image-wrap" bis_skin_checked="1"><img
+                            src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&amp;fit=crop&amp;w=500&amp;q=80"
+                            alt="Café Gourmet Arábica" class="produto-image" loading="lazy"></div>
+                    <div class="produto-info" bis_skin_checked="1">
+                        <span class="produto-categoria">gourmet</span>
+                        <h3 class="produto-nome">Café Gourmet Arábica</h3>
+                        <p class="produto-descricao">Blend premium arábica.</p>
+                        <div class="produto-rating" bis_skin_checked="1"><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span> <span
+                                class="rating-text">4.6 (89)</span></div>
+                        <div class="produto-preco" bis_skin_checked="1">R$ 38,50</div>
+                        <div class="produto-actions" bis_skin_checked="1">
+                            <button class="produto-btn" data-add="2"
+                                aria-label="Adicionar Café Gourmet Arábica ao carrinho">Adicionar ao Carrinho</button>
+                            <button class="produto-btn btn-outline" data-review="2"
+                                aria-label="Ver avaliações de Café Gourmet Arábica">Ver Avaliações</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="produto-card show" bis_skin_checked="1">
+                    <div class="produto-image-wrap" bis_skin_checked="1"><span class="badge badge-top">Mais
+                            votado</span><img
+                            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&amp;fit=crop&amp;w=500&amp;q=80"
+                            alt="Café Orgânico Sustentável" class="produto-image" loading="lazy"></div>
+                    <div class="produto-info" bis_skin_checked="1">
+                        <span class="produto-categoria">organicos</span>
+                        <h3 class="produto-nome">Café Orgânico Sustentável</h3>
+                        <p class="produto-descricao">100% orgânico, sem agrotóxicos.</p>
+                        <div class="produto-rating" bis_skin_checked="1"><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span> <span
+                                class="rating-text">4.9 (156)</span></div>
+                        <div class="produto-preco" bis_skin_checked="1">R$ 52,00</div>
+                        <div class="produto-actions" bis_skin_checked="1">
+                            <button class="produto-btn" data-add="3"
+                                aria-label="Adicionar Café Orgânico Sustentável ao carrinho">Adicionar ao
+                                Carrinho</button>
+                            <button class="produto-btn btn-outline" data-review="3"
+                                aria-label="Ver avaliações de Café Orgânico Sustentável">Ver Avaliações</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="produto-card show" bis_skin_checked="1">
+                    <div class="produto-image-wrap" bis_skin_checked="1"><img
+                            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=500&amp;q=80"
+                            alt="Café Catuaí" class="produto-image" loading="lazy"> </div>
+                    <div class="produto-info" bis_skin_checked="1">
+                        <span class="produto-categoria">especiais</span>
+                        <h3 class="produto-nome">Café Catuaí</h3>
+                        <p class="produto-descricao">Sabor frutado.</p>
+                        <div class="produto-rating" bis_skin_checked="1"><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span><span
+                                class="star filled">★</span><span class="star filled">★</span> <span
+                                class="rating-text">4.7 (98)</span></div>
+                        <div class="produto-preco" bis_skin_checked="1">R$ 41,90</div>
+                        <div class="produto-actions" bis_skin_checked="1">
+                            <button class="produto-btn" data-add="4"
+                                aria-label="Adicionar Café Catuaí ao carrinho">Adicionar ao Carrinho</button>
+                            <button class="produto-btn btn-outline" data-review="4"
+                                aria-label="Ver avaliações de Café Catuaí">Ver Avaliações</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="produto-card show" bis_skin_checked="1">
+                <div class="produto-image-wrap">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=80&ixlib=rb-4.0.3&fm=jpg&name=cafe_gourmet_sumatra.jpg"
+                        alt="Café Gourmet Sumatra" class="produto-image" loading="lazy">
+                </div>
+                <div class="produto-info" bis_skin_checked="1">
+                    <span class="produto-categoria">gourmet</span>
+                    <h3 class="produto-nome">Café Gourmet Sumatra</h3>
+                    <p class="produto-descricao">Notas intensas, chocolate amargo e final terroso.</p>
+                    <div class="produto-rating" bis_skin_checked="1"><span class="star filled">★</span><span
+                            class="star filled">★</span><span class="star filled">★</span><span
+                            class="star filled">★</span><span class="star filled">☆</span> <span class="rating-text">4.6
+                            (54)</span></div>
+                    <div class="produto-preco" bis_skin_checked="1">R$ 49,90</div>
+                    <div class="produto-actions" bis_skin_checked="1">
+                        <button class="produto-btn" data-add="5"
+                            aria-label="Adicionar Café Gourmet Sumatra ao carrinho">Adicionar ao Carrinho</button>
+                        <button class="produto-btn btn-outline" data-review="5"
+                            aria-label="Ver avaliações de Café Gourmet Sumatra">Ver Avaliações</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Add a placeholder for empty search results -->
+        <div id="produtos-empty" class="produtos-empty"
+            style="display:none; text-align:center; color:var(--text-muted); padding:1rem;" bis_skin_checked="1">
+            Nenhum produto encontrado. Tente outro termo.
+        </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="sobre">
+        <div class="container" bis_skin_checked="1">
+            <div class="sobre-content" bis_skin_checked="1">
+                <div class="containe" bis_skin_checked="1">
+                    <div class="section-header" bis_skin_checked="1">
+                        <h2 class="section-title">Nossa História</h2>
+                        <p class="section-subtitle">Paixão pelo café desde 1985</p>
+                    </div>
+                    <div class="sobre-description" bis_skin_checked="1">
+                        <p>
+                            Há mais de 35 anos, o Café Aroma tem sido sinônimo de qualidade e tradição.
+                            Nossa jornada começou com uma pequena torrefação familiar e cresceu para se
+                            tornar uma das principais referências em cafés especiais do Brasil.
+                        </p>
+                        <p>
+                            Trabalhamos diretamente com produtores locais, garantindo não apenas a melhor
+                            qualidade dos grãos, mas também práticas sustentáveis que beneficiam toda a
+                            cadeia produtiva.
+                        </p>
+                    </div>
+                    <div class="sobre-stats" bis_skin_checked="1">
+                        <div class="stat-item" bis_skin_checked="1">
+                            <span class="stat-number" data-target="35">15</span>
+                            <span class="stat-label">Anos de Experiência</span>
+                        </div>
+                        <div class="stat-item" bis_skin_checked="1">
+                            <span class="stat-number" data-target="150">200</span>
+                            <span class="stat-label">Produtores Parceiros</span>
+                        </div>
+                        <div class="stat-item" bis_skin_checked="1">
+                            <span class="stat-number" data-target="50000">130</span>
+                            <span class="stat-label">Clientes Satisfeitos</span>
+                        </div>
+                    </div>
+                    <!-- Novo bloco de Produtos e Métodos -->
+                    <div class="sobre-products" bis_skin_checked="1">
+                        <h3>Nossos Cafés e Métodos</h3>
+                        <p>Nossos grãos são selecionados e torrados artesanalmente para realçar as notas de sabor únicas
+                            de cada origem. Trabalhamos com lotes especiais das variedades <strong>Arábica</strong> e
+                            blends exclusivos, disponíveis como <em>whole-bean</em> ou moídos para diferentes métodos de
+                            preparo.</p>
+
+                        <div class="sobre-products-grid" bis_skin_checked="1">
+                            <article class="sobre-product">
+                                <img src="./cafe_especial_brasileiro.jpg" alt="Café Especial Bourbon" loading="lazy">
+                                <div class="sobre-product-info" bis_skin_checked="1">
+                                    <h4>Café Especial Bourbon</h4>
+                                    <p>Notas de chocolate e caramelo. Versátil para espresso e métodos filtrados.</p>
+                                </div>
+                            </article>
+
+                            <article class="sobre-product">
+                                <img src="./cafe_gourmet_etiope.jpg" alt="Café Gourmet Etíope" loading="lazy">
+                                <div class="sobre-product-info" bis_skin_checked="1">
+                                    <h4>Café Gourmet Etíope</h4>
+                                    <p>Notas florais e frutadas, ideal para métodos filtrados e coados.</p>
+                                </div>
+                            </article>
+
+                            <article class="sobre-product">
+                                <img src="./cafe_organico_colombiano.jpg" alt="Café Orgânico Colombiano"
+                                    loading="lazy">
+                                <div class="sobre-product-info" bis_skin_checked="1">
+                                    <h4>Café Orgânico Colombiano</h4>
+                                    <p>100% orgânico, produzido de forma sustentável — equilibrado e encorpado.</p>
+                                </div>
+                            </article>
+
+                            <article class="sobre-product">
+                                <img src="./cafe_especial_guatemala.jpg" alt="Café Especial da Guatemala"
+                                    loading="lazy">
+                                <div class="sobre-product-info" bis_skin_checked="1">
+                                    <h4>Café Especial da Guatemala</h4>
+                                    <p>Notas de frutas cítricas e acidez vibrante, perfeito para métodos filtrados.</p>
+                                </div>
+                            </article>
+
+                            <article class="sobre-product">
+                                <img src="./cha_menta_suave.jpg" alt="Chá Menta Suave" loading="lazy">
+                                <div class="sobre-product-info" bis_skin_checked="1">
+                                    <h4>Chá Menta Suave</h4>
+                                    <p>Corpo pesado e notas terrosas, ideal para espresso e prensa francesa.</p>
+                                </div>
+                            </article>
+
+                        </div>
+
+                        <p class="sobre-methods">Equipamentos recomendados: <strong>Prensa Francesa (French
+                                Press)</strong>, <strong>V60</strong>, <strong>Aeropress</strong> e máquinas de
+                            <strong>espresso</strong>. Oferecemos também acessórios como moedores, filtros e kits de
+                            degustação.
+                        </p>
+                    </div>
+                </div>
+                <div class="sobre-image" bis_skin_checked="1">
+                    <div class="image-container" bis_skin_checked="1">
+                        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=80"
+                            alt="Processo de torrefação artesanal">
+                        <div class="image-overlay" bis_skin_checked="1">
+                            <div class="play-button" bis_skin_checked="1">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contato  -->
+    <section id="contato" class="contato">
+        <div class="container" bis_skin_checked="1">
+            <div class="section-header" bis_skin_checked="1">
+                <h2 class="section-title">Entre em Contato</h2>
+                <p class="section-subtitle">Estamos aqui para ajudar você a encontrar o café perfeito</p>
+            </div>
+
+            <div class="contato-content" bis_skin_checked="1">
+                <div class="contato-info" bis_skin_checked="1">
+                    <div class="info-item" bis_skin_checked="1">
+                        <div class="info-icon" bis_skin_checked="1">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content" bis_skin_checked="1">
+                            <h3>Endereço</h3>
+                            <p>Rua do Café, 123<br>Centro, São Paulo - SP<br>CEP: 01234-567</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item" bis_skin_checked="1">
+                        <div class="info-icon" bis_skin_checked="1">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-content" bis_skin_checked="1">
+                            <h3>Telefone</h3>
+                            <p>(11) 1234-5678<br>(11) 98765-4321</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item" bis_skin_checked="1">
+                        <div class="info-icon" bis_skin_checked="1">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content" bis_skin_checked="1">
+                            <h3>Email</h3>
+                            <p>bruno.nunes.santos06@escola.pr.gov.br<br>myhpc3301@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item" bis_skin_checked="1">
+                        <div class="info-icon" bis_skin_checked="1">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content" bis_skin_checked="1">
+                            <h3>Horário de Funcionamento</h3>
+                            <p>Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 14h<br>Domingo: Fechado</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form action="https://formsubmit.co/myhpc3301@gmail.com" method="POST" class="contato-form"
+                    id="contato-form">
+                    <div class="form-group" bis_skin_checked="1">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" required="">
+                    </div>
+
+                    <div class="form-group" bis_skin_checked="1">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required="">
+                    </div>
+
+                    <div class="form-group" bis_skin_checked="1">
+                        <label for="assunto">Assunto</label>
+                        <select id="assunto" name="assunto" required="">
+                            <option value="">Selecione um assunto</option>
+                            <option value="duvidas">Dúvidas sobre produtos</option>
+                            <option value="pedidos">Pedidos e entregas</option>
+                            <option value="sugestoes">Sugestões</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" bis_skin_checked="1">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea id="mensagem" name="mensagem" rows="5" required=""></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviar Mensagem
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container" bis_skin_checked="1">
+            <div class="footer-content" bis_skin_checked="1">
+                <div class="footer-section" bis_skin_checked="1">
+                    <div class="footer-logo" bis_skin_checked="1">
+                        <i class="fas fa-coffee"></i>
+                        Café Aroma
+                    </div>
+                    <p>Há mais de 35 anos oferecendo os melhores cafés especiais do Brasil. Qualidade, tradição e sabor
+                        em cada xícara.</p>
+                    <div class="social-links" bis_skin_checked="1">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/brunoperandrenuness/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section" bis_skin_checked="1">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home" bis_skin_checked="1">Início</a></li>
+                        <li><a href="#produtos" bis_skin_checked="1">Produtos</a></li>
+                        <li><a href="#sobre" bis_skin_checked="1">Sobre Nós</a></li>
+                        <li><a href="#contato" bis_skin_checked="1">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section" bis_skin_checked="1">
+                    <h4>Produtos</h4>
+                    <ul>
+                        <li><a href="#">Cafés Especiais</a></li>
+                        <li><a href="#">Cafés Gourmet</a></li>
+                        <li><a href="#">Cafés Orgânicos</a></li>
+                        <li><a href="#">Acessórios</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section" bis_skin_checked="1">
+                    <h4>Newsletter</h4>
+                    <p>Receba novidades e ofertas especiais</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" placeholder="Seu email" required="">
+                        <button type="submit">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom" bis_skin_checked="1">
+                <p>© 2024 Café Aroma. Todos os direitos reservados.</p>
+                <p>Feito com <i class="fas fa-heart"></i> para os amantes de café</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Modais (produtos / avaliações) -->
+    <!-- Modal de Produtos (Carousel) -->
+    <div id="modal-produtos" class="modal hidden" role="dialog" aria-hidden="true"
+        aria-labelledby="produtos-modal-title" bis_skin_checked="1">
+        <div class="modal-overlay" id="modal-produtos-overlay" bis_skin_checked="1"></div>
+        <div class="modal-content product-modal" bis_skin_checked="1">
+            <button class="modal-close" id="close-produtos" aria-label="Fechar carrossel">×</button>
+            <h2 id="produtos-modal-title" class="visually-hidden">Carrossel de Produtos</h2>
+            <div class="modal-carousel" bis_skin_checked="1">
+                <button class="carousel-prev" id="prod-prev" aria-label="Anterior"><i
+                        class="fas fa-chevron-left"></i></button>
+                <div class="modal-slides" id="modal-product-slides" bis_skin_checked="1"></div>
+                <button class="carousel-next" id="prod-next" aria-label="Próximo"><i
+                        class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="modal-thumbs" id="modal-product-thumbs" bis_skin_checked="1"></div>
+            <div class="modal-product-details" id="modal-product-details" bis_skin_checked="1"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Avaliações -->
+    <div id="modal-avaliacoes" class="modal hidden" role="dialog" aria-hidden="true"
+        aria-labelledby="avaliacoes-modal-title" bis_skin_checked="1">
+        <div class="modal-overlay" id="modal-avaliacoes-overlay" bis_skin_checked="1"></div>
+        <div class="modal-content review-modal" bis_skin_checked="1">
+            <button class="modal-close" id="close-avaliacoes" aria-label="Fechar avaliações">×</button>
+            <h2 id="avaliacoes-modal-title" class="visually-hidden">Avaliações de Clientes</h2>
+            <h3>AVALIAÇÕES</h3>
+            <div id="modal-review-list" class="modal-review-list" bis_skin_checked="1"></div>
+            <div class="rating-legend" bis_skin_checked="1">1 Ruim • 2 Regular • 3 Bom • 4 Muito Bom • 5 Excelente</div>
+        </div>
+    </div>
+
+
+
+    <!-- Main JS -->
+    <script src="script.js"></script>
+
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
+    </script>
+
+
+</body>
+
+</html>
